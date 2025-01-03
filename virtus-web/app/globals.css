@@ -1,0 +1,565 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400&f[]=satoshi@900,700,500,400&display=swap');
+@import 'reactflow/dist/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark theme with vibrant accents */
+    --background: 225 30% 4%;
+    --foreground: 225 25% 98%;
+    
+    --card: 225 30% 6%;
+    --card-foreground: 225 25% 98%;
+    
+    /* Electric purple */
+    --primary: 266 100% 67%;
+    --primary-foreground: 225 25% 98%;
+    
+    /* Neon blue */
+    --secondary: 199 98% 48%;
+    --secondary-foreground: 225 25% 98%;
+    
+    /* Bright mint */
+    --accent: 156 84% 50%;
+    --accent-foreground: 225 25% 98%;
+    
+    --muted: 225 25% 12%;
+    --muted-foreground: 225 25% 60%;
+    
+    --border: 225 30% 12%;
+    --input: 225 30% 12%;
+    --ring: 266 100% 67%;
+  }
+
+  body {
+    font-family: 'Satoshi', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl lg:text-7xl font-black tracking-tight;
+    line-height: 1.1;
+  }
+
+  h2 {
+    @apply text-2xl md:text-4xl font-bold tracking-tight;
+    line-height: 1.2;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-bold tracking-tight;
+    line-height: 1.3;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+}
+
+.hero-gradient {
+  background: linear-gradient(
+    -45deg,
+    hsl(266 100% 64%),
+    hsl(199 89% 48%),
+    hsl(156 84% 50%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
+}
+
+.hero-text-shadow {
+  text-shadow: 0 2px 20px rgba(124, 58, 237, 0.2);
+}
+
+.glass-morphism {
+  @apply bg-white/80;
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 8px 32px -2px rgba(124, 58, 237, 0.08),
+    0 0 0 1px rgba(124, 58, 237, 0.05);
+}
+
+.nav-blur {
+  @apply bg-background/60 backdrop-blur-xl border-b border-border;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.glass-card {
+  @apply bg-card/80 backdrop-blur-xl;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(124, 58, 237, 0.1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(124, 58, 237, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(124, 58, 237, 0.2),
+    0 0 0 4px rgba(124, 58, 237, 0.1);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    225deg,
+    hsl(266 100% 64% / 0.1),
+    transparent 60%
+  );
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* Add a subtle shine effect */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transform: rotate(30deg);
+  animation: shine 8s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-30%) rotate(30deg);
+  }
+  100% {
+    transform: translateX(30%) rotate(30deg);
+  }
+}
+
+/* Add subtle floating animation to cards */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.glass-card {
+  animation: float 6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.glass-card:hover {
+  animation-play-state: running;
+}
+
+.animated-gradient-border {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    hsl(266 100% 64%),
+    hsl(199 89% 48%),
+    hsl(156 84% 50%),
+    hsl(266 100% 64%)
+  );
+  background-size: 400% 400%;
+  animation: border-gradient 4s linear infinite;
+}
+
+.animated-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: white;
+  border-radius: 0.7rem;
+  z-index: 0;
+}
+
+.button-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.button-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    hsl(266 100% 64%),
+    hsl(199 89% 48%),
+    hsl(156 84% 50%)
+  );
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.button-glow:hover::before {
+  opacity: 1;
+}
+
+/* Fancy underline animation for nav links */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    hsl(266 100% 64%),
+    hsl(199 89% 48%)
+  );
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes border-gradient {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(266 100% 64% / 0.2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(266 100% 64% / 0.3);
+}
+
+/* Add these new classes for background patterns */
+.bg-grid {
+  background-image: linear-gradient(to right, rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 0%,
+    hsl(266 100% 67% / 0.15),
+    transparent 60%
+  );
+  z-index: 0;
+}
+
+.bg-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 80% 80%,
+    hsl(199 98% 48% / 0.15),
+    transparent 60%
+  );
+  z-index: 0;
+}
+
+/* Update container padding */
+.section-padding {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+.container-padding {
+  @apply px-4 md:px-6 lg:px-8;
+}
+
+/* Card hover effects */
+.card-hover-effect {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-hover-effect::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    165deg,
+    transparent 0%,
+    rgba(124, 58, 237, 0.1) 200%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.card-hover-effect:hover::after {
+  opacity: 1;
+}
+
+/* Card icon container animations */
+.card-icon-container {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(
+    45deg,
+    hsl(266 100% 67% / 0.1),
+    hsl(199 98% 48% / 0.1)
+  );
+  transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover .card-icon-container {
+  transform: translateY(-5px);
+  background: linear-gradient(
+    45deg,
+    hsl(266 100% 67%),
+    hsl(199 98% 48%)
+  );
+}
+
+/* Particle effect */
+.card-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.card-particles::before,
+.card-particles::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: hsl(266 100% 67% / 0.5);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.card-particles::before {
+  top: 10%;
+  left: 10%;
+}
+
+.card-particles::after {
+  bottom: 10%;
+  right: 10%;
+}
+
+.card-hover-effect:hover .card-particles::before,
+.card-hover-effect:hover .card-particles::after {
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.animated-path {
+  stroke-dasharray: 5;
+  animation: dashdraw 2s linear infinite;
+}
+
+@keyframes dashdraw {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #60a5fa;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+.react-flow__handle {
+  opacity: 0;
+}
+
+.react-flow__controls {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.react-flow__controls button {
+  background: transparent;
+  border-radius: 4px;
+  color: #3b82f6;
+}
+
+.react-flow__controls button:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.edge-path-flow {
+  stroke-dasharray: 5;
+  animation: pathFlow 30s linear infinite;
+}
+
+.edge-circle-flow {
+  fill: #3b82f6;
+  filter: drop-shadow(0 0 2px #3b82f6);
+}
+
+@keyframes pathFlow {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Make edges more visible */
+.react-flow__edge {
+  z-index: 1;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #60a5fa;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+/* Hide the handles */
+.react-flow__handle {
+  opacity: 0;
+}
+
+/* Connection line styles */
+.connection-line {
+  stroke-opacity: 0.5;
+  stroke-dasharray: 5;
+  animation: flowDash 30s linear infinite;
+}
+
+.connection-glow {
+  stroke-opacity: 0.15;
+  filter: blur(4px);
+}
+
+/* Flowing particles */
+.flowing-particle {
+  fill: hsl(266 100% 67%);
+  filter: drop-shadow(0 0 2px hsl(266 100% 67%));
+}
+
+.flowing-particle:nth-child(2) {
+  fill: hsl(266 100% 77%);
+}
+
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+/* Edge hover effects */
+.react-flow__edge:hover .connection-line {
+  stroke-opacity: 0.8;
+  stroke-width: 3;
+}
+
+.react-flow__edge:hover .connection-glow {
+  stroke-opacity: 0.3;
+  stroke-width: 6;
+}
+
+.react-flow__edge:hover .flowing-particle {
+  filter: drop-shadow(0 0 4px hsl(266 100% 67%));
+}
+
+/* Hide handles */
+.react-flow__handle {
+  opacity: 0;
+}
+
+/* Make edges more visible */
+.react-flow__edge {
+  z-index: 1;
+}
